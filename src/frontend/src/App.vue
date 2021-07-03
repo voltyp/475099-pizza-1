@@ -18,7 +18,7 @@
         <a href="#" class="header__login"><span>Войти</span></a>
       </div>
     </header>
-    <Index></Index>
+    <Index />
   </div>
 </template>
 

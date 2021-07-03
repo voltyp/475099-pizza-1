@@ -78,9 +78,9 @@
                     v-for="ingredient in ingredients"
                     :key="ingredient.name"
                   >
-                    <span :class="['filling', `${ingredient.fillingImg}`]">{{
-                      ingredient.name
-                    }}</span>
+                    <span :class="['filling', `${ingredient.fillingImg}`]">
+                      {{ ingredient.name }}
+                    </span>
 
                     <div class="counter counter--orange ingridients__counter">
                       <button
