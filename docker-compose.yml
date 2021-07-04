@@ -16,6 +16,7 @@ services:
     command: npm start
     volumes:
       - ./src/backend:/backend
+      - /backend/node_modules
     depends_on:
       - db
     ports:
