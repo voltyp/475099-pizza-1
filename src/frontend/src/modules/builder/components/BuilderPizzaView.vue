@@ -67,9 +67,9 @@ export default {
     },
     getRepeatClass(ingredient) {
       switch (ingredient.count) {
-        case 1:
-          return "pizza__filling--second";
         case 2:
+          return "pizza__filling--second";
+        case 3:
           return "pizza__filling--third";
         default:
           return "";

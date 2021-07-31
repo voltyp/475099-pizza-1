@@ -32,15 +32,21 @@
             >
               <app-drag
                 :transfer-data="ingredient"
-                :disable="ingredient.count < 3"
+                :disable="ingredient.count >= 3"
               >
-                <span :class="['filling', `${ingredient.class}`]">
+                <span
+                  :class="[
+                    'filling',
+                    `filling--${getImageName(ingredient.image)}`,
+                  ]"
+                >
                   {{ ingredient.name }}
                 </span>
               </app-drag>
 
               <item-counter
-                v-model="ingredient.count"
+                @input="$emit('ingredient-counter', $event)"
+                :value="ingredient.count"
                 :name="ingredient.name"
               />
             </li>
@@ -55,6 +61,7 @@
 import AppDrag from "@/common/components/drag-and-drop/AppDrag";
 import RadioButton from "@/common/components/RadioButton";
 import ItemCounter from "@/common/components/ItemCounter";
+import { getImageName } from "@/common/helpers";
 
 export default {
   name: "BuilderIngredientsSelector",
@@ -72,6 +79,11 @@ export default {
       type: String,
     },
   },
-  methods: {},
+  methods: {
+    getImageName,
+    log(e) {
+      console.log(e);
+    },
+  },
 };
 </script>

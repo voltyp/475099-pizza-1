@@ -5,9 +5,9 @@
 
       <div class="sheet__content dough">
         <label
-          class="dough__input dough__input--light"
           v-for="item in dough"
           :key="item.name"
+          :class="['dough__input', classDough(item.name)]"
         >
           <radio-button
             name="dough"
@@ -36,6 +36,13 @@ export default {
     checked: {
       type: String,
       required: true,
+    },
+  },
+  methods: {
+    classDough(type) {
+      return type.includes("Тонкое")
+        ? "dough__input--light"
+        : "dough__input--large";
     },
   },
 };

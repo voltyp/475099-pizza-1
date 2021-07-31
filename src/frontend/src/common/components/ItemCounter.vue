@@ -9,7 +9,9 @@
       <span class="visually-hidden">Меньше</span>
     </button>
 
-    <input :value="value" type="text" :name="name" class="counter__input" />
+    <label>
+      <input :value="value" type="text" :name="name" class="counter__input" />
+    </label>
 
     <button
       type="button"
@@ -26,15 +28,21 @@
 export default {
   name: "ItemCounter",
   props: {
-    name: String,
-    value: Number,
+    name: {
+      type: String,
+      required: true,
+    },
+    value: {
+      type: Number,
+      required: true,
+    },
   },
   methods: {
     increment() {
-      this.$emit("input", this.value + 1);
+      this.$emit("input", { name: this.name, count: this.value + 1 });
     },
     decrement() {
-      this.$emit("input", this.value - 1);
+      this.$emit("input", { name: this.name, count: this.value - 1 });
     },
   },
 };

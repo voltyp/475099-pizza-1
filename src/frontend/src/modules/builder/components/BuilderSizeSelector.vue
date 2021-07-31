@@ -5,9 +5,9 @@
 
       <div class="sheet__content diameter">
         <label
-          class="diameter__input diameter__input--small"
           v-for="size in sizes"
           :key="size.name"
+          :class="['diameter__input', classSize(size.multiplier)]"
         >
           <radio-button
             name="diameter"
@@ -35,6 +35,18 @@ export default {
     checked: {
       type: String,
       required: true,
+    },
+  },
+  methods: {
+    classSize(multiplier) {
+      switch (multiplier) {
+        case 1:
+          return "diameter__input--small";
+        case 2:
+          return "diameter__input--normal";
+        case 3:
+          return "diameter__input--big";
+      }
     },
   },
 };

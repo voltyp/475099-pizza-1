@@ -21,6 +21,7 @@
           :ingredients="ingredients"
           :sauces="sauces"
           :checked="paramsPizza.sauce.name"
+          @ingredient-counter="changeCount"
           v-model="paramsPizza.sauce"
         />
 
@@ -60,7 +61,6 @@ export default {
     dough: pizza.dough,
     ingredients: pizza.ingredients.map((el) => ({
       ...el,
-      class: `filling--${getImageName(el.image)}`,
       key: getImageName(el.image),
       count: 0,
     })),
@@ -93,9 +93,8 @@ export default {
       );
 
       const { dough, sauce, size } = this.paramsPizza;
-      const sumParams = (dough.price + sauce.price) * size.multiplier;
 
-      return sumIngredient + sumParams;
+      return (sumIngredient + dough.price + sauce.price) * size.multiplier;
     },
     isDisableBtn() {
       return this.fillingPizza.length === 0 || this.paramsPizza.name === "";
@@ -125,6 +124,14 @@ export default {
     },
     addToCart() {
       this.cart.push(this.pizza);
+    },
+    changeCount(item) {
+      for (const ingredient of this.ingredients) {
+        if (ingredient.name === item.name) {
+          ingredient.count = item.count;
+          break;
+        }
+      }
     },
   },
 };
