@@ -48,5 +48,8 @@
     "last 2 versions",
     "IE 11"
   ],
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "vue-router": "^3.5.2"
+  }
 }

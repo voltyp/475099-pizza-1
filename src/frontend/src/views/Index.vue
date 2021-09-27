@@ -1,6 +1,6 @@
 <template>
   <main>
-    <app-layout :cart-items="cart" />
+    <app-layout-header :cart-items="cart" />
     <form class="content" action="#" method="post">
       <div class="content__wrapper">
         <h1 class="title title--big">Конструктор пиццы</h1>
@@ -42,16 +42,17 @@
 <script>
 import pizza from "@/static/pizza.json";
 import { getImageName, getTypeDough } from "@/common/helpers";
+
 import BuilderDoughSelector from "@/modules/builder/components/BuilderDoughSelector";
 import BuilderSizeSelector from "@/modules/builder/components/BuilderSizeSelector";
 import BuilderIngredientsSelector from "@/modules/builder/components/BuilderIngredientsSelector";
 import BuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
-import AppLayout from "@/layouts/AppLayout";
+import AppLayoutHeader from "@/layouts/AppLayoutHeader";
 
 export default {
   name: "Index",
   components: {
-    AppLayout,
+    AppLayoutHeader,
     BuilderPizzaView,
     BuilderIngredientsSelector,
     BuilderSizeSelector,
