@@ -75,9 +75,6 @@ export default {
           return "";
       }
     },
-    test() {
-      console.log("tett");
-    },
   },
 };
 </script>

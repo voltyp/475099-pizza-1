@@ -1,14 +1,22 @@
 <template>
   <div id="app">
-    <Index />
+    <app-layout :cart-items="cartItems">
+      <router-view @cartItem="addCartItems" />
+    </app-layout>
   </div>
 </template>
 
 <script>
-import Index from "@/views/Index.vue";
+import AppLayout from "@/layouts/AppLayout";
 export default {
   name: "App",
-  components: { Index },
+  components: { AppLayout },
+  data: () => ({ cartItems: [] }),
+  methods: {
+    addCartItems(e) {
+      this.cartItems = [...e];
+    },
+  },
 };
 </script>
 
