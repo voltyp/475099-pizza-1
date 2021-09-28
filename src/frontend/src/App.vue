@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <app-layout>
-      <router-view />
+    <app-layout :cart-items="cartItems">
+      <router-view @cartItem="addCartItems" />
     </app-layout>
   </div>
 </template>
@@ -11,6 +11,12 @@ import AppLayout from "@/layouts/AppLayout";
 export default {
   name: "App",
   components: { AppLayout },
+  data: () => ({ cartItems: [] }),
+  methods: {
+    addCartItems(e) {
+      this.cartItems = [...e];
+    },
+  },
 };
 </script>
 

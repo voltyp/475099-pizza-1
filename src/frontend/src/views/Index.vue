@@ -1,42 +1,39 @@
 <template>
-  <main>
-    <app-layout-header :cart-items="cart" />
-    <form class="content" action="#" method="post">
-      <div class="content__wrapper">
-        <h1 class="title title--big">Конструктор пиццы</h1>
+  <form class="content" action="#" method="post">
+    <div class="content__wrapper">
+      <h1 class="title title--big">Конструктор пиццы</h1>
 
-        <builder-dough-selector
-          :dough="dough"
-          v-model="paramsPizza.dough"
-          :checked="paramsPizza.dough.name"
-        />
+      <builder-dough-selector
+        :dough="dough"
+        v-model="paramsPizza.dough"
+        :checked="paramsPizza.dough.name"
+      />
 
-        <builder-size-selector
-          :sizes="sizes"
-          v-model="paramsPizza.size"
-          :checked="paramsPizza.size.name"
-        />
+      <builder-size-selector
+        :sizes="sizes"
+        v-model="paramsPizza.size"
+        :checked="paramsPizza.size.name"
+      />
 
-        <builder-ingredients-selector
-          :ingredients="ingredients"
-          :sauces="sauces"
-          :checked="paramsPizza.sauce.name"
-          @ingredient-counter="changeCount"
-          v-model="paramsPizza.sauce"
-        />
+      <builder-ingredients-selector
+        :ingredients="ingredients"
+        :sauces="sauces"
+        :checked="paramsPizza.sauce.name"
+        @ingredient-counter="changeCount"
+        v-model="paramsPizza.sauce"
+      />
 
-        <builder-pizza-view
-          :type-dough="typeDough"
-          :filling="fillingPizza"
-          :total-price="totalPrice"
-          v-model="paramsPizza.name"
-          :is-disable="isDisableBtn"
-          @addedIngredient="dropIngredient"
-          @addToCart="addToCart"
-        />
-      </div>
-    </form>
-  </main>
+      <builder-pizza-view
+        :type-dough="typeDough"
+        :filling="fillingPizza"
+        :total-price="totalPrice"
+        v-model="paramsPizza.name"
+        :is-disable="isDisableBtn"
+        @addedIngredient="dropIngredient"
+        @addToCart="addToCart"
+      />
+    </div>
+  </form>
 </template>
 
 <script>
@@ -47,12 +44,10 @@ import BuilderDoughSelector from "@/modules/builder/components/BuilderDoughSelec
 import BuilderSizeSelector from "@/modules/builder/components/BuilderSizeSelector";
 import BuilderIngredientsSelector from "@/modules/builder/components/BuilderIngredientsSelector";
 import BuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
-import AppLayoutHeader from "@/layouts/AppLayoutHeader";
 
 export default {
   name: "Index",
   components: {
-    AppLayoutHeader,
     BuilderPizzaView,
     BuilderIngredientsSelector,
     BuilderSizeSelector,
@@ -125,6 +120,8 @@ export default {
     },
     addToCart() {
       this.cart.push(this.pizza);
+      this.$emit("cartItem", this.cart);
+      console.log(this.cart);
     },
     changeCount(item) {
       for (const ingredient of this.ingredients) {
