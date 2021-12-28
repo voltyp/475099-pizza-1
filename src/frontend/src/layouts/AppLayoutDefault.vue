@@ -1,5 +1,7 @@
 <template>
-  <div class="app-layout-default"></div>
+  <div class="app-layout-default">
+    <slot />
+  </div>
 </template>
 
 <script>

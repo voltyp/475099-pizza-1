@@ -5,38 +5,37 @@
       <div class="content__wrapper">
         <h1 class="title title--big">Конструктор пиццы</h1>
 
-        <builder-dough-selector
-          :dough="dough"
-          v-model="paramsPizza.dough"
-          :checked="paramsPizza.dough.name"
-        />
+      <builder-dough-selector
+        :dough="dough"
+        v-model="paramsPizza.dough"
+        :checked="paramsPizza.dough.name"
+      />
 
-        <builder-size-selector
-          :sizes="sizes"
-          v-model="paramsPizza.size"
-          :checked="paramsPizza.size.name"
-        />
+      <builder-size-selector
+        :sizes="sizes"
+        v-model="paramsPizza.size"
+        :checked="paramsPizza.size.name"
+      />
 
-        <builder-ingredients-selector
-          :ingredients="ingredients"
-          :sauces="sauces"
-          :checked="paramsPizza.sauce.name"
-          @ingredient-counter="changeCount"
-          v-model="paramsPizza.sauce"
-        />
+      <builder-ingredients-selector
+        :ingredients="ingredients"
+        :sauces="sauces"
+        :checked="paramsPizza.sauce.name"
+        @ingredient-counter="changeCount"
+        v-model="paramsPizza.sauce"
+      />
 
-        <builder-pizza-view
-          :type-dough="typeDough"
-          :filling="fillingPizza"
-          :total-price="totalPrice"
-          v-model="paramsPizza.name"
-          :is-disable="isDisableBtn"
-          @addedIngredient="dropIngredient"
-          @addToCart="addToCart"
-        />
-      </div>
-    </form>
-  </main>
+      <builder-pizza-view
+        :type-dough="typeDough"
+        :filling="fillingPizza"
+        :total-price="totalPrice"
+        v-model="paramsPizza.name"
+        :is-disable="isDisableBtn"
+        @addedIngredient="dropIngredient"
+        @addToCart="addToCart"
+      />
+    </div>
+  </form>
 </template>
 
 <script>
