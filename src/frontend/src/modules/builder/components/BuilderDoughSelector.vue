@@ -11,10 +11,11 @@
         >
           <radio-button
             name="dough"
-            @change="$emit('input', item)"
             :value="item.name"
-            :checked="item.name === checked"
+            :checked="item.name === doughName"
+            @change="selectDough({ dough: item })"
           />
+
           <b>{{ item.name }}</b>
           <span>{{ item.description }}</span>
         </label>
@@ -25,25 +26,30 @@
 
 <script>
 import RadioButton from "@/common/components/RadioButton";
+
+import { mapMutations, mapState } from "vuex";
+
+import { UPDATE_PIZZA_PARAMS } from "@/store/mutation-types";
+import { module } from "@/store/modules/builder.store";
+
 export default {
   name: "BuilderDoughSelector",
   components: { RadioButton },
-  props: {
-    dough: {
-      type: Array,
-      required: true,
-    },
-    checked: {
-      type: String,
-      required: true,
-    },
-  },
   methods: {
+    ...mapMutations(module, {
+      selectDough: UPDATE_PIZZA_PARAMS,
+    }),
     classDough(type) {
       return type.includes("Тонкое")
         ? "dough__input--light"
         : "dough__input--large";
     },
+  },
+  computed: {
+    ...mapState(module, {
+      dough: "dough",
+      doughName: (state) => state.pizza.dough.name,
+    }),
   },
 };
 </script>

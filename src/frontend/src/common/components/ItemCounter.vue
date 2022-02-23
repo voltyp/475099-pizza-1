@@ -39,10 +39,16 @@ export default {
   },
   methods: {
     increment() {
-      this.$emit("input", { name: this.name, count: this.value + 1 });
+      this.$emit("input", {
+        ingredientName: this.name,
+        quantity: this.value + 1,
+      });
     },
     decrement() {
-      this.$emit("input", { name: this.name, count: this.value - 1 });
+      this.$emit("input", {
+        ingredientName: this.name,
+        quantity: this.value - 1,
+      });
     },
   },
 };

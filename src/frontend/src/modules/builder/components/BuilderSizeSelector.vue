@@ -11,9 +11,9 @@
         >
           <radio-button
             name="diameter"
-            @change="$emit('input', size)"
             :value="size.name"
-            :checked="size.name === checked"
+            :checked="size.name === sizeName"
+            @change="selectSize({ size })"
           />
           <span>{{ size.name }}</span>
         </label>
@@ -24,20 +24,19 @@
 
 <script>
 import RadioButton from "@/common/components/RadioButton";
+
+import { mapMutations, mapState } from "vuex";
+
+import { module } from "@/store/modules/builder.store";
+import { UPDATE_PIZZA_PARAMS } from "@/store/mutation-types";
+
 export default {
   name: "BuilderSizeSelector",
   components: { RadioButton },
-  props: {
-    sizes: {
-      type: Array,
-      required: true,
-    },
-    checked: {
-      type: String,
-      required: true,
-    },
-  },
   methods: {
+    ...mapMutations(module, {
+      selectSize: UPDATE_PIZZA_PARAMS,
+    }),
     classSize(multiplier) {
       switch (multiplier) {
         case 1:
@@ -48,6 +47,12 @@ export default {
           return "diameter__input--big";
       }
     },
+  },
+  computed: {
+    ...mapState(module, {
+      sizes: "sizes",
+      sizeName: (state) => state.pizza.size.name,
+    }),
   },
 };
 </script>

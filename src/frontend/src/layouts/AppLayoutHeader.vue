@@ -36,7 +36,7 @@
               height="32"
             />
           </picture>
-          <span>Василий Ложкин</span>
+          <span>{{ user.name }}</span>
         </router-link>
         <router-link to="/" @click="isLogin = !isLogin" class="header__logout">
           <span>Выйти</span>
@@ -47,20 +47,19 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
+import { module } from "@/store/modules/cart.store";
+
 export default {
   name: "AppLayoutHeader",
-  props: {
-    cartItems: {
-      type: Array,
-      required: true,
-    },
-  },
   data: () => ({
     isLogin: false,
   }),
   computed: {
-    totalPrice() {
-      return this.cartItems.reduce((acc, pizza) => pizza.totalPrice + acc, 0);
+    ...mapGetters(module, ["totalPrice"]),
+    user() {
+      return this.$store.state.user;
     },
   },
 };

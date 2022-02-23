@@ -14,8 +14,8 @@
             <radio-button
               name="sauce"
               :value="sauce.name"
-              @change="$emit('input', sauce)"
-              :checked="sauce.name === checked"
+              @change="selectSauce({ sauce })"
+              :checked="sauce.name === sauceName"
             />
             <span>{{ sauce.name }}</span>
           </label>
@@ -32,7 +32,7 @@
             >
               <app-drag
                 :transfer-data="ingredient"
-                :disable="ingredient.count >= 3"
+                :disable="ingredient.quantity >= 3"
               >
                 <span
                   :class="[
@@ -45,8 +45,8 @@
               </app-drag>
 
               <item-counter
-                @input="$emit('ingredient-counter', $event)"
-                :value="ingredient.count"
+                @input="updateIngredient"
+                :value="ingredient.quantity"
                 :name="ingredient.name"
               />
             </li>
@@ -61,29 +61,28 @@
 import AppDrag from "@/common/components/drag-and-drop/AppDrag";
 import RadioButton from "@/common/components/RadioButton";
 import ItemCounter from "@/common/components/ItemCounter";
+
+import { mapMutations, mapState } from "vuex";
 import { getImageName } from "@/common/helpers";
+import { module } from "@/store/modules/builder.store";
+import { UPDATE_PIZZA_PARAMS, UPDATE_INGREDIENT } from "@/store/mutation-types";
 
 export default {
   name: "BuilderIngredientsSelector",
   components: { ItemCounter, RadioButton, AppDrag },
-  props: {
-    ingredients: {
-      type: Array,
-      required: true,
-    },
-    sauces: {
-      type: Array,
-      required: true,
-    },
-    checked: {
-      type: String,
-    },
-  },
   methods: {
+    ...mapMutations(module, {
+      selectSauce: UPDATE_PIZZA_PARAMS,
+      updateIngredient: UPDATE_INGREDIENT,
+    }),
     getImageName,
-    log(e) {
-      console.log(e);
-    },
+  },
+  computed: {
+    ...mapState(module, {
+      sauces: "sauces",
+      ingredients: "ingredients",
+      sauceName: (state) => state.pizza.sauce.name,
+    }),
   },
 };
 </script>

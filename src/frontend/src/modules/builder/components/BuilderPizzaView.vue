@@ -3,23 +3,24 @@
     <label class="input">
       <span class="visually-hidden">Название пиццы</span>
       <input
+        :value="pizza.name"
         type="text"
         name="pizza_name"
         placeholder="Введите название пиццы"
-        @input="$emit('input', $event.target.value)"
+        @input="handlerPizzaName"
       />
     </label>
 
     <div class="content__constructor">
       <app-drop @drop="addIngredient">
-        <div :class="['pizza', typeDough]">
+        <div :class="['pizza', cssClassForPizza]">
           <div class="pizza__wrapper">
             <div
               v-for="ingredient in filling"
               :key="ingredient.key"
               :class="[
                 'pizza__filling',
-                `pizza__filling--${ingredient.key}`,
+                `pizza__filling--${ingredient.className}`,
                 getRepeatClass(ingredient),
               ]"
             ></div>
@@ -29,9 +30,9 @@
     </div>
 
     <builder-price-counter
-      @addToCart="$emit('addToCart')"
-      :disable="isDisable"
-      :price="totalPrice"
+      @addToCart="addToCart"
+      :disable="isDisableBtnAddToCart"
+      :price="pizzaPrice"
     />
   </div>
 </template>
@@ -40,30 +41,25 @@
 import BuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounter";
 import AppDrop from "@/common/components/drag-and-drop/AppDrop";
 
+import { module } from "@/store/modules/builder.store";
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+import { UPDATE_INGREDIENT, UPDATE_PIZZA_PARAMS } from "@/store/mutation-types";
+import { debounce } from "lodash/function";
+
 export default {
   name: "BuilderPizzaView",
   components: { AppDrop, BuilderPriceCounter },
-  props: {
-    typeDough: {
-      type: String,
-      required: true,
-    },
-    filling: {
-      type: Array,
-      required: true,
-    },
-    totalPrice: {
-      type: Number,
-      required: true,
-    },
-    isDisable: {
-      type: Boolean,
-      required: true,
-    },
-  },
   methods: {
-    addIngredient(event) {
-      this.$emit("addedIngredient", event);
+    ...mapActions(module, ["addToCart"]),
+    ...mapMutations(module, {
+      setPizzaName: UPDATE_PIZZA_PARAMS,
+      updateIngredient: UPDATE_INGREDIENT,
+    }),
+    handlerPizzaName: debounce(function (event) {
+      this.setPizzaName({ name: event.target.value });
+    }, 300),
+    addIngredient({ name: ingredientName, quantity }) {
+      this.updateIngredient({ ingredientName, quantity: quantity + 1 });
     },
     getRepeatClass(ingredient) {
       switch (ingredient.count) {
@@ -75,6 +71,15 @@ export default {
           return "";
       }
     },
+  },
+  computed: {
+    ...mapGetters(module, [
+      "cssClassForPizza",
+      "filling",
+      "isDisableBtnAddToCart",
+      "pizzaPrice",
+    ]),
+    ...mapState(module, ["pizza"]),
   },
 };
 </script>
